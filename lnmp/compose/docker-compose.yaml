@@ -1,0 +1,37 @@
+version: '3'
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: mysql57
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+    ports:
+    - "3306:3306"
+    volumes:
+    - ./docker/mysql/data:/var/lib/data
+
+  php7:
+    build:
+      context: ./php7
+    image: php-fpm-pdo
+    container_name: php7
+    ports:
+    - "9000:9000"
+    volumes:
+    - ./docker/www/:/var/www/html/
+    depends_on:
+      - db
+
+  nginx:
+    image: nginx
+    container_name: nginx1
+    ports:
+    - "80:80"
+    volumes:
+    - ./docker/www:/usr/share/nginx/html
+    - ./docker/nginx/conf.d:/etc/nginx/conf.d
+    depends_on:
+      - php7
+      - db
