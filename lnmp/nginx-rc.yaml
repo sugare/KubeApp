@@ -1,0 +1,30 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: test
+spec:
+  replicas: 1
+  selector:
+    app: test
+  template:
+    metadata:
+      labels:
+        app: test
+    spec:
+      containers:
+      - name: test
+        image: nginx
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: nginx-www
+          mountPath: /usr/share/nginx/html  
+        - name: nginx-conf
+          mountPath: /etc/nginx/conf.d
+      volumes:
+      - name: nginx-www
+        hostPath:
+          path: /home/ubuntu/song/www
+      - name: nginx-conf
+        hostPath:
+          path: /home/ubuntu/song/nginx/conf.d
