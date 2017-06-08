@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: ReplicationController
+metadata:
+  name: haproxy
+spec:
+  replicas: 1
+  selector:
+    app: app
+  template:
+    metadata:
+      labels:
+        app: app
+    spec:
+      containers:
+      - name: app
+        image: haproxy:1.7
+        ports:
+        - containerPort: 80
+        volumeMounts:
+        - name: haproxy-conf
+          mountPath: /usr/local/etc/haproxy/haproxy.cfg
+      volumes:
+      - name: haproxy-conf
+        hostPath:
+          path: /home/ubuntu/KubeApp/haproxy/haproxy.cfg
