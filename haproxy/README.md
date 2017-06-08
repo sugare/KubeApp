@@ -24,3 +24,8 @@ app1-8wf44      1/1       Running   0          37m
 app2-gnblr      1/1       Running   0          23m
 haproxy-2fs06   1/1       Running   0          7m
 ```
+
+#### 关闭服务
+```
+ubuntu@VM-155-68-ubuntu:~$ for i in `kubectl get svc | egrep -v "NAME|kubernetes" | awk '{print $1}'`;do kubectl delete svc $i; done
+```
