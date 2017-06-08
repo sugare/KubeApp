@@ -4,6 +4,7 @@
 
 
 #### 执行结果
+```
 ubuntu@VM-155-68-ubuntu:~$ kubectl get rc
 NAME      DESIRED   CURRENT   READY     AGE
 app1      1         1         1         37m
@@ -22,3 +23,4 @@ NAME            READY     STATUS    RESTARTS   AGE
 app1-8wf44      1/1       Running   0          37m
 app2-gnblr      1/1       Running   0          23m
 haproxy-2fs06   1/1       Running   0          7m
+```
