@@ -111,27 +111,27 @@ Mode: leader
 Node count: 4
 ```
 
-#### 1. 创建一个zookeeper服务实例
+#### 创建一个zookeeper服务实例
 ```
 $ docker run --name some-zookeeper --restart always -d zookeeper
 ```
 
-#### 2. 创建一个容器用于连接 zookeeper
+#### 创建一个容器用于连接 zookeeper
 ```
 $ docker run --name some-app --link some-zookeeper:zookeeper -d application-that-uses-zookeeper
 ```
 
-##### 3. 通过 zookeeper命令行 连接 zookeeper
+##### 通过 zookeeper命令行 连接 zookeeper
 ```
 $ docker run -it --rm --link some-zookeeper:zookeeper zookeeper zkCli.sh -server zookeeper
 ```
 
-#### 4. 挂载配置文件
+#### 挂载配置文件
 ```
 $ docker run --name some-zookeeper --restart always -d -v $(pwd)/zoo.cfg:/conf/zoo.cfg zookeeper
 ```
 
-#### 5. 环境变量
+#### 环境变量
 ```
 $ docker run -e "ZOO_INIT_LIMIT=10" --name some-zookeeper --restart always -d 31z4/zookeeper
 ```
