@@ -1,12 +1,29 @@
 
 #### 启动 zookeeper cluster
 ```
-$ docker-compose up -d
+$ COMPOSE_PROJECT_NAME=zk_test docker-compose up -d
+# 注意, 我们在 "docker-compose up" 和 "docker-compose ps" 前都添加了 COMPOSE_PROJECT_NAME=zk_test 这个环境变量, 这是为我们的 compose 工程起一个名字, 以免与其他的 compose 混淆.
 ```
+
+#### 使用 Docker 命令行客户端连接 ZK 集群
+```
+$ docker run -it --rm \
+        --link zoo1:zk1 \
+        --link zoo2:zk2 \
+        --link zoo3:zk3 \
+        --net zktest_default \
+        zookeeper zkCli.sh -server zk1:2181,zk2:2181,zk3:2181
+```
+
+#### 本地连接 zookeeper
+```
+$ zkCli.sh -server localhost:2181,localhost:2182,localhost:2183
+```
+
 
 #### 查看集群状态
 ```
-$ docker-compose ps
+$ COMPOSE_PROJECT_NAME=zk_test docker-compose ps
 Name              Command               State                     Ports                    
 ------------------------------------------------------------------------------------------
 zoo1   /docker-entrypoint.sh zkSe ...   Up      0.0.0.0:2181->2181/tcp, 2888/tcp, 3888/tcp 
